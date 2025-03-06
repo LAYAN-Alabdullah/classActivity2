@@ -1,0 +1,43 @@
+body {
+    font-family: 'Tajawal', sans-serif;
+    direction: rtl;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #8b5a2b;
+    color: white;
+    padding: 20px;
+}
+
+.image img {
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+section {
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: square;
+    text-align: right;
+    padding-right: 40px;
+}
+
+footer {
+    background-color: #8b5a2b;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+}
