@@ -139,35 +139,38 @@
         <div id="ai-response"></div>
     </div>
 
-    <script>
-        document.getElementById("ai-icon").addEventListener("click", () => {
-            const popup = document.getElementById("ai-popup");
-            popup.style.display = popup.style.display === "none" ? "block" : "none";
-        });
+   <script>
+    document.getElementById("ai-icon").addEventListener("click", () => {
+        const popup = document.getElementById("ai-popup");
+        popup.style.display = popup.style.display === "none" ? "block" : "none";
+    });
 
-        document.getElementById("send-question").addEventListener("click", async () => {
-            const question = document.getElementById("user-question").value.trim();
-            if (!question) return alert("الرجاء كتابة سؤال أولاً");
+    document.getElementById("send-question").addEventListener("click", async () => {
+        const questionInput = document.getElementById("user-question");
+        const question = questionInput.value.trim();
+        if (!question) return alert("الرجاء كتابة سؤال أولاً");
 
-            document.getElementById("ai-response").textContent = "⏳ جاري المعالجة...";
+        document.getElementById("ai-response").textContent = "⏳ جاري المعالجة...";
 
-            try {
-                const res = await fetch("/api/tour-guide", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ question })
-                });
+        try {
+            const res = await fetch("/api/tour-guide", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question })
+            });
 
-                if (!res.ok) throw new Error(`خطأ: ${res.status}`);
-                const data = await res.json();
+            if (!res.ok) throw new Error(`خطأ: ${res.status}`);
+            const data = await res.json();
 
-                document.getElementById("ai-response").textContent = data.answer || "لم يصل رد.";
-            } catch (err) {
-                console.error(err);
-                document.getElementById("ai-response").textContent = "⚠️ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.";
-            }
-        });
-    </script>
+            document.getElementById("ai-response").textContent = data.answer || "لم يصل رد.";
+            questionInput.value = ""; // تفريغ الحقل عشان يسأل من جديد
+        } catch (err) {
+            console.error(err);
+            document.getElementById("ai-response").textContent = "⚠️ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.";
+        }
+    });
+</script>
+
 
 </body>
 </html>
