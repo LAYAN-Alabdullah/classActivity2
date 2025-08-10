@@ -6,6 +6,66 @@
     <title>Diriyah</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* أيقونة المرشد السياحي */
+        #ai-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #8b5a2b;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 999;
+        }
+        /* نافذة الكتابة */
+        #ai-popup {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 280px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            padding: 10px;
+            z-index: 1000;
+            text-align: right;
+        }
+        #ai-popup textarea {
+            width: 100%;
+            border-radius: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            font-family: 'Tajawal', sans-serif;
+        }
+        #ai-popup button {
+            margin-top: 5px;
+            width: 100%;
+            background-color: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #ai-popup button:hover {
+            background-color: #704621;
+        }
+        #ai-response {
+            margin-top: 8px;
+            font-size: 14px;
+            white-space: pre-line;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,7 +74,7 @@
     </header>
 
     <section class="image">
-        <img src="https://media.istockphoto.com/id/1963259178/photo/diriyah-illuminated-old-town-walls-at-turaif-district-complex-at-night-riyadh-saudi-arabia.jpg?b=1&s=612x612&w=0&k=20&c=q7MwY43lklkPLvK2BMx4lZo2tlJzWBqaHnDQVdk3l-0=" alt="الدرعية" style="width: 100%; height: auto; border-radius: 10px;">
+        <img src="https://media.istockphoto.com/id/1963259178/photo/diriyah-illuminated-old-town-walls-at-turaif-district-complex-at-night-riyadh-saudi-arabia.jpg?b=1&s=612x612&w=0&k=20&c=q7MwY43lklkPLvK2BMx4lZo2tlJzWBqaHnDQVdk3l-0=" alt="الدرعية">
     </section>
 
     <section class="about">
@@ -44,42 +104,6 @@
         </ul>
     </section>
 
-    <section id="ai-guide">
-        <h2>🗺️ مرشد سياحي ذكي</h2>
-        <textarea id="user-question" placeholder="اكتب وجهتك أو سؤالك السياحي هنا..." rows="3"></textarea>
-        <br>
-        <button id="send-question">إرسال</button>
-        <div id="ai-response" style="margin-top:10px; white-space: pre-line;"></div>
-    </section>
-
-
-    <script>
-document.getElementById("send-question").addEventListener("click", async () => {
-  const question = document.getElementById("user-question").value.trim();
-  if (!question) return alert("الرجاء كتابة سؤال أولاً");
-
-  document.getElementById("ai-response").textContent = "⏳ جاري المعالجة...";
-
-  try {
-    const res = await fetch("https://class-activity2.vercel.app/api/tour-guide
-", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question })
-    });
-
-    if (!res.ok) throw new Error(`خطأ: ${res.status}`);
-    const data = await res.json();
-
-    document.getElementById("ai-response").textContent = data.answer || "لم يصل رد.";
-  } catch (err) {
-    console.error(err);
-    document.getElementById("ai-response").textContent = "⚠️ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.";
-  }
-});
-</script>
-
-    
     <section class="additional-info">
         <h2>معلومات إضافية</h2>
         <p>تشتهر الدرعية بعاداتها النجدية الأصيلة، مثل القهوة السعودية وحسن الضيافة. كما أن تاريخها يعود للقرن الـ15، وكانت مركزًا تجاريًا وثقافيًا هامًا في الجزيرة العربية.</p>
@@ -94,33 +118,47 @@ document.getElementById("send-question").addEventListener("click", async () => {
     </section>
 
     <footer>
-        <p> الدرعية ترحب بكم </p>
+        <p> الدرعية ترحب بكم  </p>
     </footer>
 
-    <!-- سكربت المرشد السياحي الذكي -->
+    <!-- أيقونة المرشد السياحي -->
+    <div id="ai-icon">🗺️</div>
+
+    <!-- نافذة الحوار -->
+    <div id="ai-popup">
+        <textarea id="user-question" placeholder="اكتب سؤالك..." rows="2"></textarea>
+        <button id="send-question">إرسال</button>
+        <div id="ai-response"></div>
+    </div>
+
     <script>
-    document.getElementById("send-question").addEventListener("click", async () => {
-      const question = document.getElementById("user-question").value.trim();
-      if (!question) return alert("الرجاء كتابة سؤال أولاً");
-
-      document.getElementById("ai-response").textContent = "⏳ جاري المعالجة...";
-
-      try {
-        const res = await fetch("https://class-activity2.vercel.app/api/tour-guide", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question })
+        document.getElementById("ai-icon").addEventListener("click", () => {
+            const popup = document.getElementById("ai-popup");
+            popup.style.display = popup.style.display === "none" ? "block" : "none";
         });
 
-        if (!res.ok) throw new Error(`خطأ: ${res.status}`);
-        const data = await res.json();
+        document.getElementById("send-question").addEventListener("click", async () => {
+            const question = document.getElementById("user-question").value.trim();
+            if (!question) return alert("الرجاء كتابة سؤال أولاً");
 
-        document.getElementById("ai-response").textContent = data.answer || "لم يصل رد.";
-      } catch (err) {
-        console.error(err);
-        document.getElementById("ai-response").textContent = "⚠️ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.";
-      }
-    });
+            document.getElementById("ai-response").textContent = "⏳ جاري المعالجة...";
+
+            try {
+                const res = await fetch("/api/tour-guide", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question })
+                });
+
+                if (!res.ok) throw new Error(`خطأ: ${res.status}`);
+                const data = await res.json();
+
+                document.getElementById("ai-response").textContent = data.answer || "لم يصل رد.";
+            } catch (err) {
+                console.error(err);
+                document.getElementById("ai-response").textContent = "⚠️ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.";
+            }
+        });
     </script>
 
 </body>
