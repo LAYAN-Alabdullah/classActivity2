@@ -53,6 +53,34 @@
   <div id="ai-response" style="margin-top:10px; white-space: pre-line;"></div>
 </section>
 
+
+    <script>
+document.getElementById("send-question").addEventListener("click", async () => {
+  const question = document.getElementById("user-question").value.trim();
+  if (!question) return alert("الرجاء كتابة سؤال أولاً");
+
+  document.getElementById("ai-response").textContent = "⏳ جاري المعالجة...";
+
+  try {
+    const res = await fetch("https://class-activity2.vercel.app/api/tour-guide
+", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question })
+    });
+
+    if (!res.ok) throw new Error(`خطأ: ${res.status}`);
+    const data = await res.json();
+
+    document.getElementById("ai-response").textContent = data.answer || "لم يصل رد.";
+  } catch (err) {
+    console.error(err);
+    document.getElementById("ai-response").textContent = "⚠️ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.";
+  }
+});
+</script>
+
+    
     <section class="additional-info">
         <h2>معلومات إضافية</h2>
         <p>تشتهر الدرعية بعاداتها النجدية الأصيلة، مثل القهوة السعودية وحسن الضيافة. كما أن تاريخها يعود للقرن الـ15، وكانت مركزًا تجاريًا وثقافيًا هامًا في الجزيرة العربية.</p>
