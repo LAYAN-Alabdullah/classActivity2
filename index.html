@@ -6,7 +6,6 @@
     <title>Diriyah</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
@@ -44,14 +43,14 @@
             </li>
         </ul>
     </section>
-    
-<section id="ai-guide">
-  <h2>🗺️ مرشد سياحي ذكي</h2>
-  <textarea id="user-question" placeholder="اكتب وجهتك أو سؤالك السياحي هنا..." rows="3"></textarea>
-  <br>
-  <button id="send-question">إرسال</button>
-  <div id="ai-response" style="margin-top:10px; white-space: pre-line;"></div>
-</section>
+
+    <section id="ai-guide">
+        <h2>🗺️ مرشد سياحي ذكي</h2>
+        <textarea id="user-question" placeholder="اكتب وجهتك أو سؤالك السياحي هنا..." rows="3"></textarea>
+        <br>
+        <button id="send-question">إرسال</button>
+        <div id="ai-response" style="margin-top:10px; white-space: pre-line;"></div>
+    </section>
 
 
     <script>
@@ -87,17 +86,42 @@ document.getElementById("send-question").addEventListener("click", async () => {
     </section>
 
     <section class="video">
-    <h2>فيديو عن ثقافة الدرعية</h2>
-    <p>فيديو يعرض الدرعية، تاريخها، وأهم معالمها الثقافية والسياحية.</p>
-    <div>
-        <iframe src="https://www.youtube.com/embed/z_THy2FptGo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-</section>
+        <h2>فيديو عن ثقافة الدرعية</h2>
+        <p>فيديو يعرض الدرعية، تاريخها، وأهم معالمها الثقافية والسياحية.</p>
+        <div>
+            <iframe src="https://www.youtube.com/embed/z_THy2FptGo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
 
-    
     <footer>
-        <p> الدرعية ترحب بكم  </p>
+        <p> الدرعية ترحب بكم </p>
     </footer>
+
+    <!-- سكربت المرشد السياحي الذكي -->
+    <script>
+    document.getElementById("send-question").addEventListener("click", async () => {
+      const question = document.getElementById("user-question").value.trim();
+      if (!question) return alert("الرجاء كتابة سؤال أولاً");
+
+      document.getElementById("ai-response").textContent = "⏳ جاري المعالجة...";
+
+      try {
+        const res = await fetch("https://class-activity2.vercel.app/api/tour-guide", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question })
+        });
+
+        if (!res.ok) throw new Error(`خطأ: ${res.status}`);
+        const data = await res.json();
+
+        document.getElementById("ai-response").textContent = data.answer || "لم يصل رد.";
+      } catch (err) {
+        console.error(err);
+        document.getElementById("ai-response").textContent = "⚠️ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.";
+      }
+    });
+    </script>
 
 </body>
 </html>
