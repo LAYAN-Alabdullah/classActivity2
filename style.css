@@ -86,6 +86,46 @@ footer {
   --muted:#8f8a83;
   --shadow:0 10px 30px rgba(0,0,0,.12);
 }
+/* جسم اللوحة: خلي التمرير عليه */
+.ai-body{
+  flex: 1 1 auto;               /* تتمد داخل اللوحة */
+  min-height: 180px;
+  max-height: 60vh;             /* ارتفاع مناسب داخل اللوحة */
+  overflow-y: auto;             /* مهم: التمرير هنا */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch; /* سلاسة على iOS */
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* اللوحة نفسها: حد أقصى للارتفاع */
+.ai-panel{
+  max-height: 80vh;             /* مساحة مناسبة للشاشة */
+  display: none;
+  flex-direction: column;
+}
+
+/* حاوية الرسائل: لا تجعلها تتمدّد وتكسر التمرير */
+.chat{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 0 0 auto;               /* مهم حتى يبقى التمرير على .ai-body */
+}
+
+/* textarea ما تتمدّد زيادة */
+.ai-input textarea{
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* للجوال مساحة أكبر */
+@media (max-width: 540px){
+  .ai-panel{ max-height: 86vh; }
+  .ai-body{ max-height: 68vh; }
+}
 
 #ai-icon{
   position:fixed; right:16px; bottom:16px;
