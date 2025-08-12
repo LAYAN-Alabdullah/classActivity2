@@ -5,147 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Diriyah – المرشد السياحي الذكي</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --brand:#8b5a2b;      /* بني تراثي */
-      --brand-600:#704621;
-      --sand:#fff7ec;       /* خلفية رملية فاتحة */
-      --paper:#fffaf4;
-      --ink:#2d261f;
-      --muted:#8f8a83;
-      --ok:#0f8b4c;
-      --danger:#b23a2c;
-      --shadow:0 10px 30px rgba(0,0,0,.12);
-      --radius:14px;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--sand);color:var(--ink);font-family:'Tajawal',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-    img{max-width:100%;height:auto;display:block}
-
-    header{
-      padding:20px 16px 8px;
-      text-align:center;
-    }
-    header h1{
-      margin:0 0 6px;
-      font-size:clamp(22px,3.5vw,34px);
-      letter-spacing:.3px;
-    }
-    header p{margin:0;color:var(--muted);font-size:14px}
-
-    /* Hero image */
-    .image{
-      padding:8px 16px 0;
-    }
-    .image .frame{
-      position:relative;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);
-      border:3px solid rgba(139,90,43,.15)
-    }
-    .image iframe, .image img{
-      width:100%;height:auto;aspect-ratio:16/9;display:block
-    }
-
-    section{padding:18px 16px;max-width:1050px;margin:0 auto}
-    .about, .tourist-spots, .additional-info, .video{
-      background:var(--paper);border:1.5px solid rgba(139,90,43,.18);
-      border-radius:18px;box-shadow:0 4px 16px rgba(0,0,0,.06)
-    }
-    section h2{margin:0 0 10px;font-size:clamp(18px,2.6vw,24px)}
-    section p, section li{line-height:1.8}
-
-    .tourist-spots ul{list-style:none;padding:0;margin:0}
-    .tourist-spots li{padding:10px 12px;border-top:1px dashed rgba(0,0,0,.06)}
-    .tourist-spots li:first-child{border-top:none}
-    .tourist-spots strong{color:var(--brand)}
-
-    footer{
-      text-align:center;padding:24px 12px;color:var(--muted);font-size:14px
-    }
-
-    /* ====== AI Guide ====== */
-    #ai-icon{
-      position:fixed;inset:auto 16px 16px auto;
-      width:64px;height:64px;border-radius:50%;
-      background:var(--brand);color:#fff;
-      display:flex;align-items:center;justify-content:center;
-      font-size:28px;cursor:pointer;box-shadow:var(--shadow);z-index:999;
-      transition:transform .2s ease, box-shadow .2s ease;
-    }
-    #ai-icon:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.16)}
-    @media (max-width:540px){#ai-icon{width:56px;height:56px;font-size:24px;right:12px;bottom:12px}}
-
-    .ai-panel{
-      position:fixed;right:16px;bottom:92px;width: min(420px, 92vw);
-      background:var(--paper);border:2px solid var(--brand);border-radius:18px;
-      box-shadow:0 18px 50px rgba(0,0,0,.2);
-      display:none;flex-direction:column;overflow:hidden;z-index:1000;
-      transform:translateY(20px);opacity:0;transition:opacity .25s ease, transform .25s ease;
-      max-height:72vh;
-    }
-    .ai-panel.show{display:flex;opacity:1;transform:translateY(0)}
-    .ai-header{
-      display:flex;align-items:center;gap:8px;justify-content:space-between;
-      padding:10px 12px;background:linear-gradient(180deg, #8b5a2b, #7a4f27);
-      color:#fff
-    }
-    .ai-title{font-weight:700}
-    .ai-actions{display:flex;align-items:center;gap:8px}
-    .ai-chip{
-      background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:999px;
-      padding:6px 10px;font-size:12px;cursor:pointer
-    }
-    .ai-close{
-      background:rgba(0,0,0,.18);border:none;color:#fff;cursor:pointer;
-      width:32px;height:32px;border-radius:8px;font-size:18px
-    }
-
-    .ai-body{display:flex;flex-direction:column;gap:8px;padding:12px;overflow:auto}
-    .ai-suggestions{display:flex;flex-wrap:wrap;gap:8px}
-    .ai-suggestions .sug{
-      border:1px dashed rgba(139,90,43,.35);background:#fff;border-radius:999px;padding:6px 10px;
-      font-size:12px;color:#4b3b2f;cursor:pointer
-    }
-
-    .chat{
-      display:flex;flex-direction:column;gap:10px;min-height:120px;
-    }
-    .bubble{
-      max-width:85%;padding:10px 12px;border-radius:16px;line-height:1.7;font-size:14px;
-      box-shadow:0 6px 14px rgba(0,0,0,.06)
-    }
-    .me{align-self:flex-end;background:#e7d8c8;border:1px solid rgba(139,90,43,.25)}
-    .bot{align-self:flex-start;background:#ffffff;border:1px solid rgba(0,0,0,.08)}
-    .meta{font-size:11px;color:var(--muted);margin-top:4px}
-    .typing{width:52px;height:30px;border-radius:16px;background:#fff;border:1px solid rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;gap:4px}
-    .dot{width:6px;height:6px;border-radius:50%;background:#b8aea4;animation:blink 1.2s infinite}
-    .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
-    @keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
-
-    .ai-input{
-      border-top:1px solid rgba(0,0,0,.08);padding:10px;background:#fff;display:flex;gap:8px;align-items:center
-    }
-    .ai-input textarea{
-      flex:1;resize:none;min-height:42px;max-height:120px;padding:10px;border:1px solid #ddd;border-radius:12px;font-family:inherit
-    }
-    .btn{
-      border:none;border-radius:12px;padding:10px 12px;cursor:pointer;font-weight:700
-    }
-    .btn-send{background:var(--brand);color:#fff}
-    .btn-send:hover{background:var(--brand-600)}
-    .btn-voice{background:#f0ece6}
-    .btn-copy{background:#f3f3f3}
-
-    .toast{
-      position:fixed;left:50%;bottom:16px;transform:translateX(-50%);
-      background:#111;color:#fff;padding:10px 14px;border-radius:10px;opacity:0;
-      transition:opacity .2s ease;pointer-events:none;z-index:1200;font-size:13px
-    }
-    .toast.show{opacity:1}
-
-    /* Accessibility focus */
-    :focus-visible{outline:3px solid #a7774b;outline-offset:2px}
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -155,9 +15,9 @@
   </header>
 
   <section class="image">
-    <div class="frame">
-      <img src="https://media.istockphoto.com/id/1963259178/photo/diriyah-illuminated-old-town-walls-at-turaif-district-complex-at-night-riyadh-saudi-arabia.jpg?b=1&s=612x612&w=0&k=20&c=q7MwY43lklkPLvK2BMx4lZo2tlJzWBqaHnDQVdk3l-0=" alt="أسوار حي الطريف – الدرعية"/>
-    </div>
+    <img
+      src="https://media.istockphoto.com/id/1963259178/photo/diriyah-illuminated-old-town-walls-at-turaif-district-complex-at-night-riyadh-saudi-arabia.jpg?b=1&s=612x612&w=0&k=20&c=q7MwY43lklkPLvK2BMx4lZo2tlJzWBqaHnDQVdk3l-0="
+      alt="أسوار حي الطريف – الدرعية">
   </section>
 
   <section class="about">
@@ -168,10 +28,22 @@
   <section class="tourist-spots">
     <h2>أبرز المعالم السياحية</h2>
     <ul>
-      <li><strong>حي الطريف</strong><p>عمارة طينية نجديّة وأزقة ضيقة وقصور تاريخية—كنز تراثي أصيل.</p></li>
-      <li><strong>وادي حنيفة</strong><p>طبيعة خلّابة ومسارات للمشي والنزهات.</p></li>
-      <li><strong>متحف الدرعية</strong><p>مقتنيات وقصص تأسيس الدولة السعودية الأولى.</p></li>
-      <li><strong>بوابة الدرعية</strong><p>مدخل تاريخي يعكس فخامة العمارة النجديّة.</p></li>
+      <li>
+        <strong>حي الطريف</strong>
+        <p>عمارة طينية نجديّة وأزقة ضيقة وقصور تاريخية—كنز تراثي أصيل.</p>
+      </li>
+      <li>
+        <strong>وادي حنيفة</strong>
+        <p>طبيعة خلّابة ومسارات للمشي والنزهات.</p>
+      </li>
+      <li>
+        <strong>متحف الدرعية</strong>
+        <p>مقتنيات وقصص تأسيس الدولة السعودية الأولى.</p>
+      </li>
+      <li>
+        <strong>بوابة الدرعية</strong>
+        <p>مدخل تاريخي يعكس فخامة العمارة النجديّة.</p>
+      </li>
     </ul>
   </section>
 
@@ -182,7 +54,7 @@
 
   <section class="video">
     <h2>فيديو عن ثقافة الدرعية</h2>
-    <div class="frame">
+    <div class="video-frame">
       <iframe width="560" height="315" src="https://www.youtube.com/embed/z_THy2FptGo"
         title="Diriyah – Culture & Heritage" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -246,41 +118,38 @@
     const API_PATH = '/api/tour-guide';
     const STORAGE_KEY = 'diriyah_guide_chat_v1';
 
-    // ==== حالة التسجيل الصوتي
     let recognizing = false;
     let recognition = null;
+    let lastSentAt = 0;
 
-    // ==== فتح/إغلاق اللوحة مع حركة
+    // فتح/إغلاق اللوحة
     const togglePanel = (forceOpen=null) => {
       const willOpen = forceOpen ?? !panel.classList.contains('show');
       if (willOpen){
         panel.style.display='flex';
         requestAnimationFrame(()=> panel.classList.add('show'));
-        input.focus();
-        scrollToBottom();
+        input.focus(); scrollToBottom();
       } else {
         panel.classList.remove('show');
         setTimeout(()=>{ panel.style.display='none'; }, 200);
       }
     };
-
     icon.addEventListener('click', ()=> togglePanel());
     closeBtn.addEventListener('click', ()=> togglePanel(false));
 
-    // إغلاق بالهروب Esc
+    // اختصارات
     document.addEventListener('keydown', (e)=>{
       if(e.key === 'Escape' && panel.classList.contains('show')) togglePanel(false);
       if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'enter') sendMessage();
     });
 
-    // ==== فقاعات الدردشة
+    // فقاعات
     function bubble(html, who='bot'){
       const wrap = document.createElement('div');
       wrap.className = `bubble ${who}`;
       wrap.innerHTML = html;
       chat.appendChild(wrap);
-      scrollToBottom();
-      persist();
+      scrollToBottom(); persist();
       return wrap;
     }
     function meta(text, who='bot'){
@@ -288,8 +157,7 @@
       m.className = 'meta';
       m.textContent = text;
       chat.appendChild(m);
-      scrollToBottom();
-      persist();
+      scrollToBottom(); persist();
       return m;
     }
     function typing(){
@@ -302,7 +170,7 @@
     }
     function scrollToBottom(){ chat.parentElement.scrollTop = chat.parentElement.scrollHeight; }
 
-    // ==== نسخ آخر رد
+    // نسخ آخر رد
     copyBtn.addEventListener('click', ()=>{
       const lastBot = [...chat.querySelectorAll('.bubble.bot')].pop();
       if(!lastBot){ return notify('لا يوجد رد لنسخه'); }
@@ -314,7 +182,7 @@
       setTimeout(()=> toast.classList.remove('show'), 1400);
     }
 
-    // ==== اقتراحات و Chips
+    // اقتراحات جاهزة
     document.querySelectorAll('.sug').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         input.value = btn.textContent.trim();
@@ -328,13 +196,11 @@
       });
     });
 
-    // ==== إرسال الرسالة
-    let lastSentAt = 0;
+    // إرسال
     sendBtn.addEventListener('click', sendMessage);
     input.addEventListener('keydown', (e)=>{
       if(e.key === 'Enter' && !e.shiftKey){
-        e.preventDefault();
-        sendMessage();
+        e.preventDefault(); sendMessage();
       }
     });
 
@@ -342,18 +208,13 @@
       const text = input.value.trim();
       if(!text) { notify('اكتب سؤالك أولاً'); return; }
 
-      // Rate limit بسيط (نصف ثانية)
       const now = Date.now();
       if(now - lastSentAt < 500) return; lastSentAt = now;
 
-      // أظهر رسالة المستخدم
       bubble(escapeHtml(text), 'me');
       meta(timeNow(), 'me');
-
-      // مؤشر الكتابة
       const t = typing();
 
-      // بناء الحمولة مع سجل المحادثة للمزيد من الذكاء
       const history = exportHistoryForApi();
 
       try{
@@ -367,12 +228,10 @@
         const data = await res.json();
         const answer = (data && (data.answer || data.content || data.message)) || 'لم يصل رد.';
 
-        // إزالة المؤشر واظهار الرد
         t.remove();
         bubble(linkify(escapeHtml(answer)), 'bot');
         meta('المرشد • ' + timeNow(), 'bot');
-        input.value='';
-        persist();
+        input.value=''; persist();
       } catch(err){
         t.remove();
         console.error(err);
@@ -381,7 +240,7 @@
       }
     }
 
-    // ==== صوت إلى نص (Web Speech API إذا متاح)
+    // صوت إلى نص (إن كان مدعوم)
     if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognition = new SR();
@@ -409,7 +268,7 @@
       voiceBtn.title = 'التسجيل الصوتي غير مدعوم في هذا المتصفح';
     }
 
-    // ==== تخزين المحادثة محليًا (LocalStorage)
+    // حفظ المحادثة محليًا
     function persist(){
       const items = [...chat.children].map(node=>{
         if(node.classList.contains('bubble')){
@@ -434,17 +293,16 @@
       }catch(_){}
     }
     function exportHistoryForApi(){
-      // يحول محتوى الشات إلى سجل مبسط للـ backend
       const list = [];
       [...chat.querySelectorAll('.bubble')].forEach(b=>{
         const role = b.classList.contains('me') ? 'user' : 'assistant';
         list.push({ role, content: b.innerText.trim() });
       });
-      return list.slice(-12); // آخر 12 رسالة تكفي عادة
+      return list.slice(-12);
     }
     loadPersisted();
 
-    // ==== أدوات مساعدة
+    // أدوات
     function escapeHtml(str){
       return str.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
     }
@@ -457,9 +315,6 @@
         return new Intl.DateTimeFormat('ar-SA',{hour:'2-digit',minute:'2-digit'}).format(new Date());
       }catch{ return new Date().toLocaleTimeString(); }
     }
-
-    // افتح اللوحة أول مرة (اختياري)
-    // togglePanel(true);
   </script>
 </body>
 </html>
