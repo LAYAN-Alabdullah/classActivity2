@@ -33,9 +33,16 @@ section {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* النصوص والقوائم بالسنتر */
+/* النصوص العامة بالسنتر */
 section, section p, section li {
   text-align: center;
+}
+
+/* فقرة "أبرز المعالم السياحية" والقائمة بداخلها على اليمين */
+.tourist-spots ul,
+.tourist-spots li,
+.tourist-spots p {
+  text-align: right;
 }
 
 section h2 { margin-top: 0; }
