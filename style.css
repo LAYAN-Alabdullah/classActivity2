@@ -1,4 +1,4 @@
-/* ===== أساس الصفحة (من ملفك الأصلي) ===== */
+/* ===== الأساس ===== */
 body {
   font-family: 'Tajawal', sans-serif;
   direction: rtl;
@@ -31,14 +31,17 @@ section {
   background: white;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: start;
+}
+
+/* النصوص والقوائم بالسنتر */
+section, section p, section li {
+  text-align: center;
 }
 
 section h2 { margin-top: 0; }
 
 ul {
   list-style-type: square;
-  text-align: right;
   padding-right: 40px;
 }
 
@@ -49,7 +52,7 @@ footer {
   margin-top: 20px;
 }
 
-/* فيديو ريسبونسف */
+/* فيديو */
 .video {
   position: relative;
   padding-bottom: 56.25%;
@@ -68,18 +71,15 @@ footer {
 }
 .video .video-frame { position: relative; padding-bottom: 56.25%; height: 0; }
 
-/* ===== هوية عامة ===== */
+/* ===== المرشد السياحي ===== */
 :root{
   --brand:#8b5a2b;
   --brand-600:#704621;
   --paper:#fffaf4;
-  --ink:#2d261f;
   --muted:#8f8a83;
   --shadow:0 10px 30px rgba(0,0,0,.12);
-  --radius:14px;
 }
 
-/* ===== المرشد السياحي الذكي ===== */
 #ai-icon{
   position:fixed; right:16px; bottom:16px;
   width:64px; height:64px; border-radius:50%;
@@ -89,7 +89,6 @@ footer {
   transition:transform .2s ease, box-shadow .2s ease;
 }
 #ai-icon:hover{ transform:translateY(-2px); box-shadow:0 14px 34px rgba(0,0,0,.16) }
-@media (max-width:540px){ #ai-icon{ width:56px; height:56px; font-size:24px; right:12px; bottom:12px } }
 
 .ai-panel{
   position:fixed; right:16px; bottom:92px; width:min(420px, 92vw);
@@ -103,11 +102,9 @@ footer {
 .ai-panel.show{ display:flex; opacity:1; transform:translateY(0) }
 
 .ai-header{
-  display:flex; align-items:center; gap:8px; justify-content:space-between;
-  padding:10px 12px; background:linear-gradient(180deg, #8b5a2b, #7a4f27); color:#fff
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px; background:linear-gradient(180deg, #8b5a2b, #7a4f27); color:#fff
 }
-.ai-title{ font-weight:700 }
-.ai-actions{ display:flex; align-items:center; gap:8px }
 .ai-chip{
   background:rgba(255,255,255,.18); color:#fff; border:none; border-radius:999px;
   padding:6px 10px; font-size:12px; cursor:pointer
@@ -117,54 +114,22 @@ footer {
   width:32px; height:32px; border-radius:8px; font-size:18px
 }
 
-.ai-body{ display:flex; flex-direction:column; gap:8px; padding:12px; overflow:auto }
-.ai-suggestions{ display:flex; flex-wrap:wrap; gap:8px }
-.ai-suggestions .sug{
-  border:1px dashed rgba(139,90,43,.35); background:#fff;
-  border-radius:999px; padding:6px 10px; font-size:12px; color:#4b3b2f; cursor:pointer
-}
-
-.chat{ display:flex; flex-direction:column; gap:10px; min-height:120px }
+.chat{ display:flex; flex-direction:column; gap:10px; min-height:120px; padding:10px }
 .bubble{
-  max-width:85%; padding:10px 12px; border-radius:16px; line-height:1.7; font-size:14px;
-  box-shadow:0 6px 14px rgba(0,0,0,.06)
+  max-width:85%; padding:10px; border-radius:16px; font-size:14px;
 }
-.me{ align-self:flex-end; background:#e7d8c8; border:1px solid rgba(139,90,43,.25) }
-.bot{ align-self:flex-start; background:#ffffff; border:1px solid rgba(0,0,0,.08) }
+.me{ align-self:flex-end; background:#e7d8c8 }
+.bot{ align-self:flex-start; background:#fff }
 .meta{ font-size:11px; color:var(--muted); margin-top:4px }
-.typing{
-  width:52px; height:30px; border-radius:16px; background:#fff; border:1px solid rgba(0,0,0,.08);
-  display:flex; align-items:center; justify-content:center; gap:4px
-}
-.dot{ width:6px; height:6px; border-radius:50%; background:#b8aea4; animation:blink 1.2s infinite }
-.dot:nth-child(2){ animation-delay:.2s }
-.dot:nth-child(3){ animation-delay:.4s }
-@keyframes blink{ 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+.typing{ width:52px; height:30px; background:#fff; border-radius:16px; display:flex; gap:4px; align-items:center; justify-content:center }
 
-.ai-input{
-  border-top:1px solid rgba(0,0,0,.08); padding:10px; background:#fff;
-  display:flex; gap:8px; align-items:center
-}
-.ai-input textarea{
-  flex:1; resize:none; min-height:42px; max-height:120px; padding:10px;
-  border:1px solid #ddd; border-radius:12px; font-family:inherit
-}
-.btn{ border:none; border-radius:12px; padding:10px 12px; cursor:pointer; font-weight:700 }
+.btn{ border:none; border-radius:12px; padding:10px; cursor:pointer }
 .btn-send{ background:var(--brand); color:#fff }
 .btn-send:hover{ background:var(--brand-600) }
-.btn-voice{ background:#f0ece6 }
-.btn-copy{ background:#f3f3f3 }
 
-/* Toast */
 .toast{
   position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
   background:#111; color:#fff; padding:10px 14px; border-radius:10px; opacity:0;
-  transition:opacity .2s ease; pointer-events:none; z-index:1200; font-size:13px
+  transition:opacity .2s ease; z-index:1200; font-size:13px
 }
 .toast.show{ opacity:1 }
-
-/* تحسينات بسيطة للريسبونسف */
-@media (max-width:768px){
-  section { width: 92%; }
-  ul { padding-right: 24px; }
-}
